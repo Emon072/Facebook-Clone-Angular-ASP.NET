@@ -1,0 +1,17 @@
+
+<body>
+    <app-header [loginInfoForHeader]="loginInfoForHome" (currentPageEmitter)="currentPageChange($event)" (logoutStatusEmitter)="logoutStatusHomePage($event)"></app-header>
+    
+    <div *ngIf="currentPage==1">
+        <app-main-body-part [loginInfoForMainBody]="loginInfoForHome"></app-main-body-part>
+    </div>
+
+    <div *ngIf="currentPage==3">
+        <app-message [loginInfoForMessage]="loginInfoForHome"></app-message>
+    </div>
+
+    <div *ngIf="currentPage==2">
+        <app-friend-list [loginInfoForFriendList]="loginInfoForHome"></app-friend-list>
+    </div>
+
+</body>

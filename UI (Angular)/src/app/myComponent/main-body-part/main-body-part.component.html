@@ -1,0 +1,35 @@
+<!-- main body starts -->
+<div class="main__body">
+    <!-- sidebar starts -->
+      <app-sidebar [loginInfoForSidebar]="loginInfoForMainBody"></app-sidebar>
+      
+    <!-- sidebar ends -->
+
+    <!-- feed starts -->
+    <div class="feed">
+      <!-- story Reel add here later -->
+       <app-story-reel [loginInfoForStoryReel]="loginInfoForMainBody"></app-story-reel>
+      <!-- message sender starts -->
+        <app-post [loginInfoForPost]="loginInfoForMainBody"></app-post>
+      <!-- post ends -->
+    </div>
+    <!-- feed ends -->
+
+    <div style="flex: 0.33" class="widgets">
+      <div
+        class="fb-page"
+        data-href="https://www.facebook.com/facebook"
+        data-tabs="timeline"
+        data-width="500"
+        data-height="1000"
+        data-small-header="false"
+        data-adapt-container-width="true"
+        data-hide-cover="false"
+        data-show-facepile="true"
+      >
+      </div>
+    </div>
+  </div>
+  <!-- main body ends -->
+
+  

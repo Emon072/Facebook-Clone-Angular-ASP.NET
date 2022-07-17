@@ -1,0 +1,75 @@
+<div class="mainBody">
+  
+
+  <div *ngIf="registerCheck;else other_content">
+    <div class="clolor_opacity"></div>
+    <div class="headerLoginText"><h1 class="textColorDesign">Login</h1></div>
+    
+    <div class="maindiv">
+      <div class="inputs">
+        <div class="Fields">
+          <div class="Fieldset">
+            <input type="text" class="Before-FS" required="" autocomplete="off" [(ngModel)]="email">
+            <h1 class="Fs-H"><span>Email</span></h1>
+            <label class="placeholder">Email</label>
+          </div>
+        </div>
+        <div class="Fields">
+          <div class="Fieldset">
+            <input type="password" class="Before-FS" required="" [(ngModel)]="password">
+            <h1 class="Fs-H"><span>Password</span></h1>
+            <label class="placeholder">Password</label>
+          </div>
+        </div>
+
+      </div>
+      <button class="loginButtonMain" (click)="loginButtonMain()">Login</button>
+    </div>
+
+    <div class="needNewAccount" (click)="registerButton()">Need New Account? <b style="color: aqua;">Sign Up </b></div>
+  </div>
+
+  <ng-template #other_content>
+
+    <div class="clolor_opacity_register"></div>
+
+    <div class="headerRegisterText"><h1 class="textColorDesign">Sign Up</h1></div>
+
+    <div class="maindivRegister">
+
+      <input type="file" #Image accept="image/*" id="imageUpload" (change)="handlerFileInput($event)">
+      <label for="imageUpload"><img  class="avater_profile_image" src="{{loginInfoPerson.profilePicture}}"></label>
+
+      <div class="inputs">
+        <div class="Fields">
+          <div class="Fieldset">
+            <input type="text" class="Before-FS" required="" autocomplete="off" [(ngModel)]="loginInfoPerson.name">
+            <h1 class="Fs-H"><span>Name</span></h1>
+            <label class="placeholder">Name</label>
+          </div>
+        </div>
+        <div class="Fields">
+          <div class="Fieldset">
+            <input type="text" class="Before-FS" required="" autocomplete="off"
+              [(ngModel)]="loginInfoPerson.emailAddress">
+            <h1 class="Fs-H"><span>Email</span></h1>
+            <label class="placeholder">Email</label>
+          </div>
+        </div>
+        <div class="Fields">
+          <div class="Fieldset">
+            <input type="password" class="Before-FS" required="" [(ngModel)]="loginInfoPerson.password">
+            <h1 class="Fs-H"><span>Password</span></h1>
+            <label class="placeholder">Password</label>
+          </div>
+        </div>
+
+      </div>
+      <button class="RegisterButtonMain" (click)="registerButtonMain()">Register</button>
+    </div>
+
+    <div class="needNewAccountRegister" (click)="loginButton()">Already Have an Account? <b style="color: aqua;">Login </b></div>
+  </ng-template>
+
+
+</div>

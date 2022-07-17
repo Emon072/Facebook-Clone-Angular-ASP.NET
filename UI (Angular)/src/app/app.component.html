@@ -1,0 +1,7 @@
+<div *ngIf="loginCode;else other_content">
+    <app-login (loginSuccess)="LoginUser($event)"></app-login>
+</div>
+
+<ng-template #other_content>
+    <app-home [loginInfoForHome] = "loginInfoPerson" (logoutStatusEmitter)="logOutStatusMain($event)"></app-home>
+</ng-template>
