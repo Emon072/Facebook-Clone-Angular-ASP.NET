@@ -56,8 +56,8 @@ export class AppComponent implements OnInit {
   addUserCookieInfo(loginInfo: LoginInfo){
     // expire the cookie after 1 day
     const dateNow = new Date();
-    dateNow.setHours(dateNow.getHours()+24);
-    //dateNow.setMinutes(dateNow.getMinutes()+1);
+    //dateNow.setHours(dateNow.getHours()+24);
+    dateNow.setMinutes(dateNow.getMinutes()+1);
     this.cookieSerive.set('id',loginInfo.id,dateNow);
   }
 

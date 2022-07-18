@@ -126,6 +126,7 @@ export class FriendListComponent implements OnInit {
 
     this.requestService.addRequest(this.friendReqestDemo).subscribe(response=>
       {
+        sessionStorage.clear();
         this.getAllFriendsInfo();
       })
   }
@@ -154,6 +155,7 @@ export class FriendListComponent implements OnInit {
         if (this.friendRequestInfo[i].requestSenderId==requestPerson.id){
           this.requestService.removeRequest(this.friendRequestInfo[i]).subscribe(response =>
             {
+              sessionStorage.clear();
               this.getAllFriendsInfo();
             });
         }
@@ -173,12 +175,14 @@ export class FriendListComponent implements OnInit {
     this.friendDemo.friendId = this.loginInfoForFriendList?.id as string;
 
     this.friendsService.addFriends(this.friendDemo).subscribe(response =>{
+      sessionStorage.clear();
     })
     
     this.friendDemo.friendPersonId = this.loginInfoForFriendList?.id as string;
     this.friendDemo.friendId = requestPerson.id;
 
     this.friendsService.addFriends(this.friendDemo).subscribe(response =>{
+      sessionStorage.clear();
     })
     this.removeRequest(requestPerson);
     
@@ -207,11 +211,13 @@ export class FriendListComponent implements OnInit {
     for (var i=0; i<this.friendInfo.length; i++){
       if (this.friendInfo[i].friendId == friendPerson.id && this.friendInfo[i].friendPersonId == this.loginInfoForFriendList?.id){
         this.friendsService.removeFriend(this.friendInfo[i]).subscribe (response=>{
+          sessionStorage.clear();
           this.getAllFriendsInfo();
         })
       }
       if (this.friendInfo[i].friendId == this.loginInfoForFriendList?.id && this.friendInfo[i].friendPersonId == friendPerson.id){
         this.friendsService.removeFriend(this.friendInfo[i]).subscribe (response=>{
+          sessionStorage.clear();
           this.getAllFriendsInfo();
         })
       }
@@ -224,6 +230,7 @@ export class FriendListComponent implements OnInit {
     this.removeAllTheStoryOfThisUser(user);
 
     this.loginService.deleteUser(user.id).subscribe(response => {
+      sessionStorage.clear();
       this.getAllLoginInfo();
     });
   }
@@ -236,6 +243,7 @@ export class FriendListComponent implements OnInit {
 
       for (var i=0; i<this.postInfo.length; i++){
         if (this.postInfo[i].postPersionId == user.id){
+          sessionStorage.clear();
           this.postService.removePost(this.postInfo[i]);
         }
       }
@@ -250,6 +258,7 @@ export class FriendListComponent implements OnInit {
       for (var i=0; i<this.storyInfo.length; i++){
         if (this.storyInfo[i].senderId == user.id){
           this.storyService.deleteStory(this.storyInfo[i]).subscribe (response=>{
+            sessionStorage.clear();
             console.log('yes story has been deleted');
           });
         }

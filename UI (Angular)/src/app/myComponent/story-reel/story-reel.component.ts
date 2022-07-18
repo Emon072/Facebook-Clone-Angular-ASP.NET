@@ -32,16 +32,29 @@ export class StoryReelComponent implements OnInit {
   // store all the story of his friends
   StoryInfoFriend : StoryInfo[] = [];
 
+  // this is for checking the story of this user
+  demoLoginInfo : LoginInfo[] = [];
+
   constructor(private loginService : LoginService, private friendService : FriendsService, private storyService : StoryService) { }
 
   ngOnInit(): void {
-    this.getAllLoginInfo();
-    
+    //this.demoLoginInfo = JSON.parse(sessionStorage.getItem('loginInfo')|| '{}') as LoginInfo[];
+    if (!this.demoLoginInfo[0]){
+      this.getAllLoginInfo();
+    }
+    else {
+      this.loginInfo = JSON.parse(sessionStorage.getItem('loginInfo')|| '{}') as LoginInfo[];
+      this.friendInfo = JSON.parse(sessionStorage.getItem('friendInfo')|| '{}') as FriendsInfo[];
+      this.friendLoginInfo = JSON.parse(sessionStorage.getItem('friendLoginInfo')|| '{}') as LoginInfo[];
+      this.storyInfo = JSON.parse(sessionStorage.getItem('storyInfo')|| '{}') as StoryInfo[];
+      this.StoryInfoFriend = JSON.parse(sessionStorage.getItem('storyInfoFriend') || '{}') as StoryInfo[];
+    }
   }
 
   getAllLoginInfo(){
     this.loginService.getAllLoginInfo().subscribe(data =>{
       this.loginInfo = data;
+      sessionStorage.setItem('loginInfo', JSON.stringify(this.loginInfo));
       this.getAllFriendInfo();
       
     })
@@ -49,6 +62,7 @@ export class StoryReelComponent implements OnInit {
   getAllFriendInfo(){
     this.friendService.getAllFriendsInfo().subscribe(data =>{
       this.friendInfo = data;
+      sessionStorage.setItem('friendInfo', JSON.stringify(this.friendInfo));
       this.getFriendUserInfoOfUser();
     });
   }
@@ -66,6 +80,7 @@ export class StoryReelComponent implements OnInit {
       }
     }
     this.friendLoginInfo.push(this.loginInfoForStoryReel as LoginInfo);
+    sessionStorage.setItem('friendLoginInfo', JSON.stringify(this.friendLoginInfo));
     this.getAllStory();
   }
 
@@ -73,6 +88,7 @@ export class StoryReelComponent implements OnInit {
   getAllStory(){
     this.storyService.getAllStoryInfo().subscribe(data =>{
       this.storyInfo = data;
+      sessionStorage.setItem('storyInfo', JSON.stringify(this.storyInfo));
       this.getStoryOfTheStoryPerson();
     });
   }
@@ -91,6 +107,7 @@ export class StoryReelComponent implements OnInit {
         }
       }
     }
+    sessionStorage.setItem('storyInfoFriend', JSON.stringify(this.StoryInfoFriend));
     
   }
 
@@ -111,7 +128,7 @@ export class StoryReelComponent implements OnInit {
     reader.onload = (event:any) =>{
       this.demoStory.storyPicture = event.target.result;
       this.storyService.addStory(this.demoStory).subscribe(result =>{
-        this.getAllStory();
+        this.getAllLoginInfo();
         alert('Story uploaded successfully');
       })
     }

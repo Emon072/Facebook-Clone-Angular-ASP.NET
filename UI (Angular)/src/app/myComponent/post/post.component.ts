@@ -21,6 +21,8 @@ export class PostComponent implements OnInit {
 
   // this will store all the post of the user
   postInfo : PostInfo[] = [];
+  // this is for checking that the session has post of this user or not...
+  demoPostInfoForSession : PostInfo[] = [];
   // this willl store all the friend
   friendInfo : FriendsInfo[] = []; 
   // this will store all te friend of this user
@@ -48,14 +50,26 @@ export class PostComponent implements OnInit {
   constructor(private postService: PostService , private friendsService : FriendsService, private adminService: AdminService) { }
 
   ngOnInit(): void {
-    this.getAllPost();
-    this.getAllAdminInfo();
+    this.demoPostInfoForSession = JSON.parse(sessionStorage.getItem('postInfo') || '{}') as PostInfo[];
+
+    if (!this.demoPostInfoForSession[0]){
+      this.getAllAdminInfo();
+      this.getAllPost();
+    }
+    else {
+      this.postInfo = JSON.parse(sessionStorage.getItem('postInfo') || '{}') as PostInfo[]; 
+      this.friendInfo = JSON.parse(sessionStorage.getItem('friendInfo') || '{}') as FriendsInfo[];
+      this.postInfoOfUser = JSON.parse(sessionStorage.getItem('postInfoOfUser') || '{}') as PostInfo[];
+      this.adminInfo = JSON.parse(sessionStorage.getItem('adminInfo') || '{}') as AdminInfo[];
+      this.cheakThisIsAdmin();
+    }
     this.imageUrlFor = this.loginInfoForPost?.profilePicture as string;
   }
 
   getAllAdminInfo(){
     this.adminService.getAllAdmin().subscribe(admin =>{
       this.adminInfo = admin;
+      sessionStorage.setItem('adminInfo', JSON.stringify(this.adminInfo));
       this.cheakThisIsAdmin();
     });
   }
@@ -77,12 +91,20 @@ export class PostComponent implements OnInit {
   getAllPost(){
     this.postService.getAllPost().subscribe(posts => {
       this.postInfo = posts;
-      this.getAllFriends();
+      if (this.is_admin){
+        this.postInfoOfUser = this.postInfo;
+        sessionStorage.setItem('postInfoOfUser', JSON.stringify(this.postInfoOfUser));
+      }
+      else {
+        this.getAllFriends();
+      }
+      sessionStorage.setItem('postInfo', JSON.stringify(this.postInfo));
     });
   }
   getAllFriends(){
     this.friendsService.getAllFriendsInfo().subscribe(friends => {
       this.friendInfo = friends;
+      sessionStorage.setItem('friendInfo', JSON.stringify(this.friendInfo));
       this.getFriendOfThisCurrentUser();
     });
   }
@@ -105,6 +127,8 @@ export class PostComponent implements OnInit {
         this.postInfoOfUser.push(this.postInfo[i]);
       }
     }
+
+    sessionStorage.setItem('postInfoOfUser', JSON.stringify(this.postInfoOfUser));
 
   }
 
@@ -133,22 +157,36 @@ export class PostComponent implements OnInit {
     this.postInfoDemo.createdDate = new Date();
     
     this.postService.addPost(this.postInfoDemo).subscribe(response => { 
-     this.getAllPost();
+      sessionStorage.clear();
+      this.getAllAdminInfo();
+      this.getAllPost();
     });
-    this.getAllPost();
     this.postInfoDemo.postMessage = '';
     this.postInfoDemo.postImage = 'string';
   }
   likeUpdate(post:PostInfo){
     this.postService.likeUpdatePost(post).subscribe(response => {
-      console.log(response);
+      sessionStorage.clear();
+      this.getAllAdminInfo();
+      this.getAllPost();
     })
   }
 
   // delete post
   deleteThisPost(post:PostInfo){
     this.postService.removePost(post).subscribe(response => {
+      sessionStorage.clear();
       this.getAllPost();
+      this.getAllAdminInfo();
     });
+  }
+
+
+  // store all the post info in the sessionStorage
+  storeAllTheUserPost(){
+    sessionStorage.setItem('postInfo', JSON.stringify(this.postInfo));
+    sessionStorage.setItem('postInfoOfUser', JSON.stringify(this.postInfoOfUser));
+    sessionStorage.setItem('friendInfo', JSON.stringify(this.friendInfo));
+    sessionStorage.setItem('adminInfo', JSON.stringify(this.adminInfo));
   }
 }
