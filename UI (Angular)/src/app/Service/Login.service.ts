@@ -20,4 +20,13 @@ export class LoginService {
     loginInfo.id = "00000000-0000-0000-0000-000000000000";
     return this.http.post<LoginInfo>(this.baseUrl, loginInfo);
   }
+
+  getSingleLoginInfo(id: string):Observable<LoginInfo>{
+    return this.http.get<LoginInfo>(this.baseUrl +'/'+ id);
+  }
+
+  deleteUser (id:string) : Observable<LoginInfo>{
+    return this.http.delete<LoginInfo>(this.baseUrl +'/'+ id);
+  }
+
 }

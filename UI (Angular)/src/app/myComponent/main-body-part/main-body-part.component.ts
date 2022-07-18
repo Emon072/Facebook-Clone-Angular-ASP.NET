@@ -37,4 +37,14 @@ export class MainBodyPartComponent implements OnInit {
     });
   }
 
+  opacity_controller : number = 0;
+  changeManinBodyOpacity(event: boolean){
+    if (event){
+      this.opacity_controller = 1;
+    }
+    else {
+      this.opacity_controller = 0;
+    }
+  }
+
 }

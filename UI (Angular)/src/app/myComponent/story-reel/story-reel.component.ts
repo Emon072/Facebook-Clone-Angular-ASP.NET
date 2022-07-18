@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { data } from 'jquery';
+import { data, post } from 'jquery';
 import { DemoStory } from 'src/app/Models/demoStory.model';
 import { FriendsInfo } from 'src/app/Models/friends.model';
 import { LoginInfo } from 'src/app/Models/login.model';
@@ -73,7 +73,6 @@ export class StoryReelComponent implements OnInit {
   getAllStory(){
     this.storyService.getAllStoryInfo().subscribe(data =>{
       this.storyInfo = data;
-      console.log(this.storyInfo);
       this.getStoryOfTheStoryPerson();
     });
   }
@@ -102,22 +101,21 @@ export class StoryReelComponent implements OnInit {
     storyPicture: ''
   }
   
-  fileToUpload : File | undefined ;
   // add new story 
   handlerFileInput(event : any){
     this.demoStory.senderId = this.loginInfoForStoryReel?.id as string;
     this.demoStory.senderName = this.loginInfoForStoryReel?.name as string;
     
-    this.fileToUpload = event.target.files[0];
+    var fileToUploadStory = event.target.files[0];
     var reader = new FileReader();
     reader.onload = (event:any) =>{
       this.demoStory.storyPicture = event.target.result;
       this.storyService.addStory(this.demoStory).subscribe(result =>{
         this.getAllStory();
-        console.log(result);
+        alert('Story uploaded successfully');
       })
     }
-    reader.readAsDataURL(event.target.files[0]);
+    reader.readAsDataURL(fileToUploadStory);
   }
 
 }

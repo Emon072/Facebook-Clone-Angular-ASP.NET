@@ -16,7 +16,7 @@
     </div>
 
     <div class="messageSender__option">
-      <input type="file" #Image accept="image/*" id="imageUpload" (change)="handlerFileInput($event)">
+      <input type="file" #imageInput accept="image/*" id="imageUpload" (change)="handlerFileInputPost($event)">
       <label for="imageUpload" style="color: green" class="material-icons">photo_library</label>
       <h3>Photo</h3>
     </div>
@@ -40,7 +40,10 @@
           alt="" />
         <div class="post__topInfo">
           <h3>{{post.name}}</h3>
-          <p>{{post.createdDate}}</p>
+          <p>{{post.createdDate | date:'dd-MM-yyyy'}}</p>
+        </div>
+        <div *ngIf="is_admin">
+          <button style="background-color: red; margin-left: 440px; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 20px; cursor: pointer;" (click)="deleteThisPost(post)">Delete</button>
         </div>
       </div>
 
@@ -89,7 +92,10 @@
             alt="" />
           <div class="post__topInfo">
             <h3>{{post.name}}</h3>
-            <p>{{post.createdDate}}</p>
+            <p>{{post.createdDate | date:'dd-MM-yyyy'}}</p>
+          </div>
+          <div *ngIf="is_admin">
+            <button style="background-color: red; margin-left: 440px; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 20px; cursor: pointer;"(click)="deleteThisPost(post)">Delete</button>
           </div>
         </div>
 
@@ -133,9 +139,7 @@
       <h3>Emon</h3>
       <p>25 April at 20:30</p>
     </div>
-    <div>
-      <button style="background-color: red; margin-left: 440px; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 20px; cursor: pointer;">Delete</button>
-    </div>
+    
   </div>
 
   <div class="post__bottom">

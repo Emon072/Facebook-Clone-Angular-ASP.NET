@@ -5,6 +5,8 @@ import { LoginInfo } from 'src/app/Models/login.model';
 import { PostInfo } from 'src/app/Models/post.model';
 import { FriendsService } from 'src/app/Service/friends.service';
 import { PostService } from 'src/app/Service/post.service';
+import { AdminService } from 'src/app/Service/admin.service';
+import { AdminInfo } from 'src/app/Models/admin.model';
 
 @Component({
   selector: 'app-post',
@@ -26,6 +28,12 @@ export class PostComponent implements OnInit {
   // this will store all the post of the current user friends
   postInfoOfUser : PostInfo[] = []; 
 
+  // store all the admin 
+  adminInfo : AdminInfo[] = [];
+
+  //admin check variable
+  is_admin : boolean = false;
+
   postInfoDemo : PostInfo = {
     id: '',
     postPersionId: '',
@@ -37,11 +45,33 @@ export class PostComponent implements OnInit {
     like: 0
   }
 
-  constructor(private postService: PostService , private friendsService : FriendsService) { }
+  constructor(private postService: PostService , private friendsService : FriendsService, private adminService: AdminService) { }
 
   ngOnInit(): void {
     this.getAllPost();
+    this.getAllAdminInfo();
     this.imageUrlFor = this.loginInfoForPost?.profilePicture as string;
+  }
+
+  getAllAdminInfo(){
+    this.adminService.getAllAdmin().subscribe(admin =>{
+      this.adminInfo = admin;
+      this.cheakThisIsAdmin();
+    });
+  }
+
+  cheakThisIsAdmin(){
+    var flag = false;
+    for (var i=0;i<this.adminInfo.length; i++){
+      if (this.adminInfo[i].adminId == this.loginInfoForPost?.id){
+        flag = true;
+        break;
+      }
+    }
+
+    if (flag){
+      this.is_admin = true;
+    }
   }
 
   getAllPost(){
@@ -78,17 +108,18 @@ export class PostComponent implements OnInit {
 
   }
 
-  fileToUpload : File | undefined ;
+  fileToUploadPost : File | undefined ;
 
   // for image
-  handlerFileInput(event:any){
-    this.fileToUpload = event.target.files[0];
+  handlerFileInputPost(event:any){
+    this.fileToUploadPost = event.target.files[0];
     var reader = new FileReader();
     reader.onload = (event:any) =>{
       this.postInfoDemo.postImage = event.target.result;
     }
     reader.readAsDataURL(event.target.files[0]);
   }
+
   createPost(){
     var name = this.loginInfoForPost?.name;
     var postPersionId = this.loginInfoForPost?.id;
@@ -112,5 +143,12 @@ export class PostComponent implements OnInit {
     this.postService.likeUpdatePost(post).subscribe(response => {
       console.log(response);
     })
+  }
+
+  // delete post
+  deleteThisPost(post:PostInfo){
+    this.postService.removePost(post).subscribe(response => {
+      this.getAllPost();
+    });
   }
 }

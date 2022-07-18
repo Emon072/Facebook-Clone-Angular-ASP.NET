@@ -51,6 +51,8 @@
   }
   input{
     outline: none;
+    background: transparent;
+    color: white;
   }
   .Before-FS{
     width:344px;
@@ -63,7 +65,7 @@
     transition: 0.1s;
   }
   .Before-FS:focus{
-    border: 2px solid #1a73e8;
+    border: 2px solid aqua;
     border-top:1px solid transparent;
   }
   .Fs-H{
@@ -78,13 +80,13 @@
   }
   .Fieldset > h1 > span {
   float: left;
-  color:#1a73e8;
+  color:#09e8e8;
   font-family: 'Google Sans','Noto Sans Myanmar UI','arial','sans-serif';
   font-size: 13px;
   }
   
   .Fieldset >h1::before{
-    border-top:2px solid #1a73e8;
+    border-top:2px solid aqua;
     content:' ';
     float: left;
     margin: 0.5em 2px 0 -1px;
@@ -93,21 +95,21 @@
   }
   .Fieldset > h1::after{
   
-    border-top:2px solid #1a73e8;
+    border-top:2px solid aqua;
     content: ' ';
-  display: block;
-  height:1.5em;
-  left:2px;
-  margin: 0 1px 0 0;
-  overflow: hidden;
-  position: relative;
-  top:0.5em;
+    display: block;
+    height:1.5em;
+    left:2px;
+    margin: 0 1px 0 0;
+    overflow: hidden;
+    position: relative;
+    top:0.5em;
   }
   .placeholder{
     position: absolute;
     left:20px;
     top:19px;
-    color:#80868b;
+    color:#d7dbdb;
     font-size: 16px;
     font-weight: 400;
     pointer-events: none;
@@ -131,11 +133,11 @@
     border:1px solid transparent;
     margin-top: 20px;
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 20px;
     line-height: 1.42;
     color:white;
     border-radius: 4px;
-    background-color: #1a73e8;
+    background-color: aqua;
     outline: none;
     width: 200px;
     text-align: center;
@@ -158,11 +160,11 @@
 .registerButton{
   cursor: pointer;
   border:1px solid transparent;
-  font-size: 14px;
+  font-size: 20px;
 
   color:white;
   border-radius: 4px;
-  background-color: #1a73e8;
+  background-color: aqua;
   outline: none;
   width: 80px;
   text-align: center;
@@ -178,7 +180,7 @@
     margin-left: 90px;
     color:white;
     border-radius: 4px;
-    background-color: #1a73e8;
+    background-color: aqua;
     outline: none;
     width: 80px;
     text-align: center;
@@ -299,11 +301,11 @@ input[type="file"] {
     border:1px solid transparent;
     margin-top: 0px;
     padding: 6px 12px;
-    font-size: 14px;
+    font-size: 20px;
     line-height: 1.42;
     color:white;
     border-radius: 4px;
-    background-color: #1a73e8;
+    background-color: aqua;
     outline: none;
     width: 200px;
     text-align: center;

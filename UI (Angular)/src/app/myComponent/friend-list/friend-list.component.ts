@@ -1,10 +1,16 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { AdminInfo } from 'src/app/Models/admin.model';
 import { FriendRequestInfo } from 'src/app/Models/friendRequest.model';
 import { FriendsInfo } from 'src/app/Models/friends.model';
 import { LoginInfo } from 'src/app/Models/login.model';
+import { AdminService } from 'src/app/Service/admin.service';
 import { FriendsService } from 'src/app/Service/friends.service';
 import { LoginService } from 'src/app/Service/Login.service';
 import { RequestService } from 'src/app/Service/request.service';
+import { PostService } from 'src/app/Service/post.service';
+import { StoryService } from 'src/app/Service/story.service';
+import { PostInfo } from 'src/app/Models/post.model';
+import { StoryInfo } from 'src/app/Models/story.model';
 
 @Component({
   selector: 'app-friend-list',
@@ -21,11 +27,37 @@ export class FriendListComponent implements OnInit {
   findFriendInfo : LoginInfo[] = [];
   friendListOfThisPerson : LoginInfo[] = []; // this will store all the friend list of this person
   friendRequestThisPerson : LoginInfo[] = []; // this will store the current person login information
+  is_admin : boolean = false; // this is for checkin this is admin or not
 
-  constructor(private loginService: LoginService , private friendsService: FriendsService , private requestService: RequestService) { }
+  // store all the admin 
+  adminInfo : AdminInfo[] = [];
+
+  constructor(private loginService: LoginService , private friendsService: FriendsService , private requestService: RequestService, private adminService: AdminService, private postService : PostService, private storyService: StoryService) { }
 
   ngOnInit(): void {
     this.getAllLoginInfo();
+    this.getAllAdmin();
+  }
+
+  getAllAdmin(){
+    this.adminService.getAllAdmin().subscribe(admin =>{
+      this.adminInfo = admin;
+      this.cheakThisIsAdmin();
+    });
+  }
+
+  cheakThisIsAdmin(){
+    var flag = false;
+    for (var i=0;i<this.adminInfo.length; i++){
+      if (this.adminInfo[i].adminId == this.loginInfoForFriendList?.id){
+        flag = true;
+        break;
+      }
+    }
+
+    if (flag){
+      this.is_admin = true;
+    }
   }
 
   getAllLoginInfo() {
@@ -45,8 +77,8 @@ export class FriendListComponent implements OnInit {
   getAllRequestInfo() {
     this.requestService.getAllRequestInfo().subscribe(response => { 
       this.friendRequestInfo = response;
-      this.getAllFindFriendInfo();
       this.getAllRequestOfThisPerson();
+      this.getAllFindFriendInfo();
       this.getAllTheFriendsOfThisUser();
     });
   }
@@ -184,6 +216,45 @@ export class FriendListComponent implements OnInit {
         })
       }
     }
+  }
+
+  // remove the user 
+  removeThisUser(user:LoginInfo){
+    this.removeAllThePostOfThisUser(user);
+    this.removeAllTheStoryOfThisUser(user);
+
+    this.loginService.deleteUser(user.id).subscribe(response => {
+      this.getAllLoginInfo();
+    });
+  }
+
+  // store all the post
+  postInfo : PostInfo[] = [];
+  removeAllThePostOfThisUser(user:LoginInfo){
+    this.postService.getAllPost().subscribe(data =>{
+      this.postInfo = data;
+
+      for (var i=0; i<this.postInfo.length; i++){
+        if (this.postInfo[i].postPersionId == user.id){
+          this.postService.removePost(this.postInfo[i]);
+        }
+      }
+    });
+  }
+
+  // store all the story
+  storyInfo : StoryInfo[] = [];
+  removeAllTheStoryOfThisUser(user : LoginInfo){
+    this.storyService.getAllStoryInfo().subscribe(data => {
+      this.storyInfo = data;
+      for (var i=0; i<this.storyInfo.length; i++){
+        if (this.storyInfo[i].senderId == user.id){
+          this.storyService.deleteStory(this.storyInfo[i]).subscribe (response=>{
+            console.log('yes story has been deleted');
+          });
+        }
+      }
+    });
   }
 
 }

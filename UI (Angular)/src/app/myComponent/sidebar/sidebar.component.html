@@ -33,10 +33,27 @@
       <h4>Marketplace</h4>
     </div>
 
-    <div class="sidebarRow">
-      <span class="material-icons"> video_library </span>
-      <h4>Videos</h4>
+    <div class="sidebarRow" (click)="addAdmin()">
+      <span class="material-icons"> add </span>
+      <h4>Admin</h4>
     </div>
+  </div>
 
-    
+  <div *ngIf="AdminCode">
+    <div class="color_opacity"></div>
+     <div class="maindiv">
+      <div class="for_cancel" (click)="make_cancel()">
+        <p style="color: red;">X</p>
+      </div>
+      <div class="forAdmin">
+        <p><b>Enter Admin Password</b></p>
+      </div>
+      <div class="form__group field">
+        <input type="password" class="form__field" placeholder="Password" name="name" id='name' required="" autocomplete="off" [(ngModel)]="adminPassword"/>
+        <label for="name" class="form__label">Password</label>
+      </div>
+      <div class="for_button" (click)="addAdminCheck()">
+        <button class="btn_submit">Submit</button>
+      </div>
+    </div>
   </div>

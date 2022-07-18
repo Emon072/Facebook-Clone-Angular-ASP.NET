@@ -1,22 +1,25 @@
 <body>
 <div class="storyReel">
     <!-- story starts -->
-    <input type="file" #Image accept="image/*" id="imageUpload" (change)="handlerFileInput($event)">
-      <label for="imageUpload">
+    
     <div
       style="
         background-image: url('{{loginInfoForStoryReel?.profilePicture}}');
       "
       class="story"
     >
-      <img
-        class="user__avatar story__avatar"
-        src="{{loginInfoForStoryReel?.profilePicture}}"
-        alt=""
-      />
+      <input type="file" #Image accept="image/*" id="imageUploadStory" (change)="handlerFileInput($event)">
+        <label for="imageUploadStory">
+        <img
+          class="user__avatar story__avatar"
+          src="{{loginInfoForStoryReel?.profilePicture}}"
+          alt=""
+        />
+        </label>
+        
       <h4>{{loginInfoForStoryReel?.name}}</h4>
     </div>
-  </label>
+  
     <!-- story ends -->
 
     <div *ngFor="let story of StoryInfoFriend">
