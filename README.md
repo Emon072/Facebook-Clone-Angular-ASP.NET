@@ -1,4 +1,4 @@
-# Facebook-Clone-Angular-ASP.NET-
+# Facebook-Clone-Angular-ASP.NET
 
 # Login Page:
 Here this page will will check the user Email and Password and match it with the database users if it match then the user can able to login in here.
@@ -34,4 +34,11 @@ In this section every key stroke of the keyboard the whole page will dynamically
 
 # Drive Link of this full Project is given bellow :
 https://drive.google.com/drive/folders/10xIVlrKwAAb3Gb_O1tZNvHyyOh2LCw7I?usp=sharing
+
+# Flow chart:
+![Screenshot (4)](https://user-images.githubusercontent.com/65850447/179964272-83633b08-6b5e-407b-8a09-69f53728ab9d.png)
+
+
+# Schema Diagram
+![Screenshot (5)](https://user-images.githubusercontent.com/65850447/179964327-2173e6a0-2722-4c35-ab0b-ab60cfdcaa04.png)
 
