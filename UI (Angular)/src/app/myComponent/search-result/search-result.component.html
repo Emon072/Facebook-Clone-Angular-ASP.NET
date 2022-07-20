@@ -1,0 +1,23 @@
+<H3>Search Result</H3>
+<div *ngFor="let friend of searchResultInfoForSearch">
+
+  <div class="card">
+    <table style="width: 100%;">
+      <tr>
+        <td rowspan="1" style="width: 20%;">
+          <img src="{{friend?.profilePicture}}" style="width: 100%;">
+        </td>
+        <td>
+          <H2 style="cursor: pointer;" (click)="thisPersonProfile(friend)">{{friend.name}}</H2>
+          <button style="width: 100%; background-color: turquoise; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 32px; cursor: pointer;" (click)="thisPersonProfile(friend)">Profile</button>
+        </td>
+      </tr>
+      <tr>
+        
+      </tr>
+    </table>
+  </div>
+  
+  <div class="make_some_space"> </div>
+
+</div>

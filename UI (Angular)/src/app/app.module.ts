@@ -14,6 +14,8 @@ import { StoryReelComponent } from './myComponent/story-reel/story-reel.componen
 import { FriendListComponent } from './myComponent/friend-list/friend-list.component';
 import { MessageComponent } from './myComponent/message/message.component';
 import { CookieService } from 'ngx-cookie-service';
+import { ProfileComponent } from './myComponent/profile/profile.component';
+import { SearchResultComponent } from './myComponent/search-result/search-result.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +29,8 @@ import { CookieService } from 'ngx-cookie-service';
     StoryReelComponent,
     FriendListComponent,
     MessageComponent,
+    ProfileComponent,
+    SearchResultComponent,
   ],
   imports: [
     BrowserModule,

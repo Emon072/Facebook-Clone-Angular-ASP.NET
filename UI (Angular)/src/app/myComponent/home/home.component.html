@@ -1,6 +1,6 @@
 
 <body>
-    <app-header [loginInfoForHeader]="loginInfoForHome" (currentPageEmitter)="currentPageChange($event)" (logoutStatusEmitter)="logoutStatusHomePage($event)"></app-header>
+    <app-header [loginInfoForHeader]="loginInfoForHome" [requestCount]="requestCount" (currentPageEmitter)="currentPageChange($event)" (logoutStatusEmitter)="logoutStatusHomePage($event)" (searchContentEmitter)="changeSearchContentHome($event)"></app-header>
     
     <div *ngIf="currentPage==1">
         <app-main-body-part [loginInfoForMainBody]="loginInfoForHome"></app-main-body-part>
@@ -11,7 +11,16 @@
     </div>
 
     <div *ngIf="currentPage==2">
-        <app-friend-list [loginInfoForFriendList]="loginInfoForHome"></app-friend-list>
+        <app-friend-list [loginInfoForFriendList]="loginInfoForHome" (requestCountNumber)="currentRequestCount($event)" (thisPersonProfileInfo)="currentProfilePerson($event)"></app-friend-list>
     </div>
+
+    <div *ngIf="currentPage==4">
+        <app-profile></app-profile>
+    </div>
+
+    <div *ngIf="currentPage==5">
+        <app-search-result [searchResultInfoForSearch]="this.searchResultInfo" (thisPersonProfileInfoSearch)="currentProfilePerson($event)"></app-search-result>
+    </div>
+
 
 </body>

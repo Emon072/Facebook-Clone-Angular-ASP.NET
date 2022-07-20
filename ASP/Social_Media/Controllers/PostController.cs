@@ -66,7 +66,7 @@ namespace Social_Media.Controllers
                 existingPost.PostPersionId = post.PostPersionId;
                 existingPost.PostImage = post.PostImage;
                 existingPost.Like = post.Like;
-                existingPost.CreatedDate = new DateTime();
+                existingPost.CreatedDate = post.CreatedDate;
                 await initialDbContext.SaveChangesAsync();
                 return Ok(existingPost);
             }

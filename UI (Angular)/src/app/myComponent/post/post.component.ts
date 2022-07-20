@@ -51,12 +51,15 @@ export class PostComponent implements OnInit {
 
   ngOnInit(): void {
     this.demoPostInfoForSession = JSON.parse(sessionStorage.getItem('postInfo') || '{}') as PostInfo[];
+    sessionStorage.setItem('loginInfoPerson', JSON.stringify(this.loginInfoForPost));
 
     if (!this.demoPostInfoForSession[0]){
+      sessionStorage.setItem('loginInfoPerson', JSON.stringify(this.loginInfoForPost));
       this.getAllAdminInfo();
       this.getAllPost();
     }
     else {
+      sessionStorage.setItem('loginInfoPerson', JSON.stringify(this.loginInfoForPost));
       this.postInfo = JSON.parse(sessionStorage.getItem('postInfo') || '{}') as PostInfo[]; 
       this.friendInfo = JSON.parse(sessionStorage.getItem('friendInfo') || '{}') as FriendsInfo[];
       this.postInfoOfUser = JSON.parse(sessionStorage.getItem('postInfoOfUser') || '{}') as PostInfo[];
@@ -84,6 +87,7 @@ export class PostComponent implements OnInit {
     }
 
     if (flag){
+      sessionStorage.setItem('is_admin','true');
       this.is_admin = true;
     }
   }
@@ -93,6 +97,7 @@ export class PostComponent implements OnInit {
       this.postInfo = posts;
       if (this.is_admin){
         this.postInfoOfUser = this.postInfo;
+        sessionStorage.setItem('loginInfoPerson', JSON.stringify(this.loginInfoForPost));
         sessionStorage.setItem('postInfoOfUser', JSON.stringify(this.postInfoOfUser));
       }
       else {

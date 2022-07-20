@@ -14,9 +14,18 @@ export class HomeComponent implements OnInit {
   constructor() { }
 
   currentPage: number = 1;
+  requestCount : number = 0;
+  search : string ="";
 
   ngOnInit(): void {
     // this is initilization function 
+  }
+  currentProfilePerson(demo: LoginInfo){
+    this.currentPage = 4;
+  }
+
+  currentRequestCount(demo:number){
+    this.requestCount = demo;
   }
 
   currentPageChange(demo : number){
@@ -25,6 +34,11 @@ export class HomeComponent implements OnInit {
 
   logoutStatusHomePage(demo : boolean){
     this.logoutStatusEmitter.emit(demo);
+  }
+
+  searchResultInfo : LoginInfo[] = [];
+  changeSearchContentHome(demo : LoginInfo[]){
+    this.searchResultInfo= demo;
   }
 
 }

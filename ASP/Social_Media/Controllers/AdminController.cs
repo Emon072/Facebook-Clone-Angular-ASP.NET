@@ -51,7 +51,23 @@ namespace Social_Media.Controllers
             await initialDbContext.SaveChangesAsync();
             return CreatedAtAction(nameof(AddAdmin), new { AdminId = admin.AdminId }, admin);
         }
-
+        // Delete A profile
+        [HttpDelete]
+        [Route("{AdminId:guid}")]
+        public async Task<IActionResult> DeleteFriend([FromRoute] Guid AdminId)
+        {
+            var existingFriend = await initialDbContext.AdminClass.FirstOrDefaultAsync(x => x.AdminId == AdminId);
+            if (existingFriend != null)
+            {
+                initialDbContext.AdminClass.Remove(existingFriend);
+                await initialDbContext.SaveChangesAsync();
+                return Ok(existingFriend);
+            }
+            else
+            {
+                return NotFound("Friend not found");
+            }
+        }
 
     }
 }

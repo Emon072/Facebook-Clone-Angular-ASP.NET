@@ -7,7 +7,7 @@
           <img src="{{request.profilePicture}}" style="width: 100%;">
         </td>
         <td colspan="2">
-          <H2>{{request.name}}</H2>
+          <H2 style="cursor: pointer;" (click)="thisPersonProfile(request)">{{request.name}}</H2>
         </td>
       </tr>
       <tr>
@@ -15,7 +15,7 @@
           <button style="width: 100%; background-color: turquoise; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 32px; cursor: pointer;" (click)="acceptRequest(request)">Accept</button>
         </td>
         <td>
-          <button style="width: 100%; background-color: red; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 32px; cursor: pointer;" (click)="removeRequest(request)">Remove</button>
+          <button style="width: 100%; background-color: red; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 32px; cursor: pointer;color: white;" (click)="removeRequest(request)">Remove</button>
         </td>
       </tr>
     </table>
@@ -34,12 +34,12 @@
         <img src="{{friend?.profilePicture}}" style="width: 100%;">
       </td>
       <td colspan="1">
-        <H2>{{friend.name}}</H2>
+        <H2 style="cursor: pointer;" (click)="thisPersonProfile(friend)">{{friend.name}}</H2>
       </td>
     </tr>
     <tr>
       <td>
-        <button style="width: 100%; background-color: red; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 32px; cursor: pointer;" (click)="removeFriend(friend)">Remove</button>
+        <button style="width: 100%; background-color: red; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 32px; cursor: pointer;color: white;" (click)="removeFriend(friend)">Remove</button>
       </td>
     </tr>
   </table>
@@ -59,10 +59,10 @@
           <img src="{{friend?.profilePicture}}" style="width: 100%;">
         </td>
         <td *ngIf="is_admin" colspan="2">
-          <H2>{{friend.name}}</H2>
+          <H2 style="cursor: pointer;" (click)="thisPersonProfile(friend)">{{friend.name}}</H2>
         </td>
         <td *ngIf="is_admin==false" colspan="1">
-          <H2>{{friend.name}}</H2>
+          <H2 style="cursor: pointer;" (click)="thisPersonProfile(friend)">{{friend.name}}</H2>
         </td>
       </tr>
       <tr>
@@ -70,7 +70,7 @@
           <button style="width: 100%; background-color: turquoise; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 32px; cursor: pointer;" (click)="addFriendButton(friend)">Add Friend</button>
         </td>
         <td *ngIf="is_admin">
-          <button style="width: 100%; background-color: red; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 32px; cursor: pointer;" (click)="removeThisUser(friend)">Remove User</button>
+          <button style="width: 100%; background-color: red; border: none; border-radius: 10px; color: #333; /* Dark grey */ padding: 15px 32px; cursor: pointer;color: white;" (click)="removeThisUser(friend)">Remove User</button>
         </td>
 
         <td *ngIf="is_admin==false">

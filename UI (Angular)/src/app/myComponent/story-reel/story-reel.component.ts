@@ -38,7 +38,7 @@ export class StoryReelComponent implements OnInit {
   constructor(private loginService : LoginService, private friendService : FriendsService, private storyService : StoryService) { }
 
   ngOnInit(): void {
-    //this.demoLoginInfo = JSON.parse(sessionStorage.getItem('loginInfo')|| '{}') as LoginInfo[];
+    this.demoLoginInfo = JSON.parse(sessionStorage.getItem('loginInfo')|| '{}') as LoginInfo[];
     if (!this.demoLoginInfo[0]){
       this.getAllLoginInfo();
     }

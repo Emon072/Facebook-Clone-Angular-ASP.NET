@@ -3,6 +3,7 @@
     background-image: url('../../../assets/images/loginPageWalpaper.jpg');
     /* Full height */
     height: 620px; 
+    width: 100%;
 
   /* Center and scale the image nicely */
     background-position: center;

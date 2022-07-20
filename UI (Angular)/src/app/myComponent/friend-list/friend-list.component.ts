@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { AdminInfo } from 'src/app/Models/admin.model';
 import { FriendRequestInfo } from 'src/app/Models/friendRequest.model';
 import { FriendsInfo } from 'src/app/Models/friends.model';
@@ -20,6 +20,8 @@ import { StoryInfo } from 'src/app/Models/story.model';
 export class FriendListComponent implements OnInit {
 
   @Input() loginInfoForFriendList : LoginInfo | undefined;
+  @Output() requestCountNumber : EventEmitter<number> = new EventEmitter();
+  @Output() thisPersonProfileInfo : EventEmitter<LoginInfo> = new EventEmitter();
 
   loginInfo : LoginInfo[] = [];
   friendInfo : FriendsInfo[] = [];
@@ -31,6 +33,9 @@ export class FriendListComponent implements OnInit {
 
   // store all the admin 
   adminInfo : AdminInfo[] = [];
+
+  // store all the current request count
+  requestCount : number = 0;
 
   constructor(private loginService: LoginService , private friendsService: FriendsService , private requestService: RequestService, private adminService: AdminService, private postService : PostService, private storyService: StoryService) { }
 
@@ -133,11 +138,13 @@ export class FriendListComponent implements OnInit {
 
   // get the request of this person
   getAllRequestOfThisPerson (){
+    this.requestCount = 0;
     this.friendRequestThisPerson = [];
     for (var i=0;i<this.friendRequestInfo.length;i++){
     
       if (this.friendRequestInfo[i].requestPersonId == this.loginInfoForFriendList?.id){
         // now get this person loginInfo from the list
+        this.requestCount++;
         for (var j=0;j<this.loginInfo.length;j++){
           if (this.loginInfo[j].id == this.friendRequestInfo[i].requestSenderId){
             this.friendRequestThisPerson.push(this.loginInfo[j]);
@@ -146,6 +153,7 @@ export class FriendListComponent implements OnInit {
         }
       }
     }
+    this.requestCountNumber.emit(this.requestCount);
   }
 
   // remove request of this person 
@@ -155,6 +163,7 @@ export class FriendListComponent implements OnInit {
         if (this.friendRequestInfo[i].requestSenderId==requestPerson.id){
           this.requestService.removeRequest(this.friendRequestInfo[i]).subscribe(response =>
             {
+              this.requestCount--;
               sessionStorage.clear();
               this.getAllFriendsInfo();
             });
@@ -204,6 +213,7 @@ export class FriendListComponent implements OnInit {
         }
       }
     }
+    sessionStorage.setItem('friendListOfThisPerson', JSON.stringify(this.friendListOfThisPerson));
   }
 
   // remove friend
@@ -264,6 +274,14 @@ export class FriendListComponent implements OnInit {
         }
       }
     });
+  }
+
+  // this person profile show 
+  thisPersonProfile(user : LoginInfo){
+    
+    sessionStorage.setItem('userCheck',"no");
+    sessionStorage.setItem('currentProfile',JSON.stringify(user));
+    this.thisPersonProfileInfo.emit(user);
   }
 
 }

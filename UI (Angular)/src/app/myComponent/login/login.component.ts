@@ -65,13 +65,42 @@ export class LoginComponent implements OnInit {
   loginInfoPerson : LoginInfo = {
     id : "",
     emailAddress : "",
-    name : "Emon",
+    name : "",
     password : "",
     profilePicture : "../../../assets/images/Avater_profile_picture.png"
   }
   registerButtonMain(){
 
     var flag = 0;
+
+    if (this.loginInfoPerson.emailAddress == ""){
+      alert('Please enter your email address');
+      return;
+    }
+    else if (this.loginInfoPerson.name == ""){
+      alert('Please enter your name');
+      return;
+    }
+    else if (this.loginInfoPerson.password == "" || this.loginInfoPerson.password.length <8){
+      alert('Please enter minimum 8 length password');
+      return;
+    }
+
+    for (var i=0;i<this.loginInfoPerson.emailAddress.length;i++) {
+      if (this.loginInfoPerson.emailAddress[i] == '@'){
+        var email = "";
+        for (var j=i+1;j<this.loginInfoPerson.emailAddress.length;j++) {
+          email+= this.loginInfoPerson.emailAddress[j];
+        }
+        if (email == "gmail.com"){}
+        else {
+          alert("Please enter a valid email address");
+          return;
+        }
+        break;
+      }
+    }
+    
     for (var i  = 0; i < this.loginInfo.length; i++) {
       if (this.loginInfo[i].emailAddress === this.loginInfoPerson.emailAddress){
         flag = 1;
@@ -81,14 +110,10 @@ export class LoginComponent implements OnInit {
       alert("This Email Address is already in use");
     }
     else {
-      console.log("Successfull");
-
-      this.loginService.addUser(this.loginInfoPerson).subscribe(response => { 
-        console.log(response);
+      this.loginService.addUser(this.loginInfoPerson).subscribe(response => {
         this.loginSuccess.emit(response);
       });
     }
-    console.log(this.loginInfoPerson);
   }
 
   fileToUpload : File | undefined ;
