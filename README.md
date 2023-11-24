@@ -39,6 +39,6 @@ https://drive.google.com/drive/folders/10xIVlrKwAAb3Gb_O1tZNvHyyOh2LCw7I?usp=sha
 ![Screenshot (4)](https://user-images.githubusercontent.com/65850447/179964272-83633b08-6b5e-407b-8a09-69f53728ab9d.png)
 
 
-# Schema Diagram
+# Schema Diagram ( Of this project )
 ![Screenshot (5)](https://user-images.githubusercontent.com/65850447/179964327-2173e6a0-2722-4c35-ab0b-ab60cfdcaa04.png)
 
